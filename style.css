@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: white;
+}
+
+.container {
+    text-align: center;
+}
+
+.weather-card {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    margin-top: 20px;
+}
+
+.weather-card h2 {
+    margin: 10px 0;
+}
+
+.weather-card p {
+    margin: 8px 0;
+    font-size: 18px;
+}
+
+.weather-card img {
+    width: 80px;
+    margin-top: 10px;
+}
