@@ -1,36 +1,70 @@
-const API_KEY = "YOUR_API_KEY";   // <-- Replace this
-const BASE_URL = "https://api.openweathermap.org/data/2.5/weather";
+const apiKey = "YOUR_API_KEY";
+const weatherDisplay = document.getElementById("weatherDisplay");
+const searchBtn = document.getElementById("searchBtn");
+const cityInput = document.getElementById("cityInput");
 
-// Function to fetch weather
-function getWeather(city) {
-
-    const url = `${BASE_URL}?q=${city}&appid=${API_KEY}&units=metric`;
-
-    axios.get(url)
-        .then(function (response) {
-            console.log("Weather Data:", response.data);
-            displayWeather(response.data);
-        })
-        .catch(function (error) {
-            console.error("Error fetching weather:", error);
-        });
+// Show loading spinner
+function showLoading() {
+    weatherDisplay.innerHTML = `
+        <div class="loading">
+            <div class="spinner"></div>
+            <p>Loading...</p>
+        </div>
+    `;
 }
 
-// Function to display weather on page
+// Show error message
+function showError(message) {
+    weatherDisplay.innerHTML = `
+        <p class="error">${message}</p>
+    `;
+}
+
+// Display weather data
 function displayWeather(data) {
-
-    const cityName = data.name;
-    const temperature = data.main.temp;
-    const description = data.weather[0].description;
-    const iconCode = data.weather[0].icon;
-
-    document.getElementById("city").innerText = cityName;
-    document.getElementById("temperature").innerText = `Temperature: ${temperature} °C`;
-    document.getElementById("description").innerText = description;
-
-    const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
-    document.getElementById("icon").src = iconUrl;
+    weatherDisplay.innerHTML = `
+        <h2>${data.name}</h2>
+        <p>🌡️ ${data.main.temp}°C</p>
+        <p>${data.weather[0].description}</p>
+        <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png">
+    `;
 }
 
-// Call function for hardcoded city
-getWeather("London");
+// Fetch weather using async/await
+async function getWeather(city) {
+
+    if (!city) {
+        showError("Please enter a city name.");
+        return;
+    }
+
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
+
+    try {
+        showLoading();
+        searchBtn.disabled = true;
+
+        const response = await axios.get(url);
+
+        displayWeather(response.data);
+
+    } catch (error) {
+        showError("City not found. Please try again.");
+    } finally {
+        searchBtn.disabled = false;
+    }
+}
+
+// Button click event
+searchBtn.addEventListener("click", () => {
+    const city = cityInput.value.trim();
+    getWeather(city);
+    cityInput.value = "";
+});
+
+// Enter key support
+cityInput.addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        searchBtn.click();
+    }
+});
