@@ -1,64 +1,72 @@
 body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to right, #6a11cb, #2575fc);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    color: white;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to right, #4facfe, #00f2fe);
+  margin: 0;
+  padding: 0;
+  text-align: center;
 }
 
 .container {
-    background: rgba(0,0,0,0.3);
-    padding: 30px;
-    border-radius: 10px;
-    text-align: center;
-    width: 350px;
+  padding: 20px;
 }
 
 .search-box {
-    margin-bottom: 20px;
+  margin: 20px 0;
 }
 
-#cityInput {
-    padding: 8px;
-    width: 70%;
-    border: none;
-    border-radius: 5px;
+input {
+  padding: 10px;
+  width: 200px;
+  border-radius: 5px;
+  border: none;
 }
 
-#searchBtn {
-    padding: 8px 12px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    background: #ff9800;
-    color: white;
+button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #333;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-#searchBtn:hover {
-    background: #e68900;
+button:hover {
+  background-color: #555;
 }
 
-.error {
-    color: #ff4d4d;
-    margin-top: 10px;
+.weather-container {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  display: inline-block;
 }
 
-.loading {
-    margin-top: 15px;
+.forecast-section {
+  margin-top: 30px;
 }
 
-.spinner {
-    border: 4px solid rgba(255,255,255,0.3);
-    border-top: 4px solid white;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    animation: spin 1s linear infinite;
-    margin: 10px auto;
+.forecast-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
 }
 
-@keyframes spin {
-    100% { transform: rotate(360deg); }
+.forecast-card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.forecast-card:hover {
+  transform: scale(1.05);
+}
+
+@media (max-width: 600px) {
+  .forecast-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
